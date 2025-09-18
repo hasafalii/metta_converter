@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MeTTa Online Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; }
+        form { display: flex; flex-direction: column; max-width: 400px; }
+        label { margin-top: 10px; }
+        button { margin-top: 20px; padding: 10px; }
+    </style>
+</head>
+<body>
+<h1>MeTTa Online Converter</h1>
+<form action="/convert" method="post" enctype="multipart/form-data">
+    <label>Source Type:</label>
+    <select name="source_type">
+        <option value="csv">CSV</option>
+        <option value="json">JSON</option>
+        <option value="txt">TXT</option>
+        <option value="web">Website</option>
+        <option value="api">API</option>
+    </select>
+
+    <label>Upload File:</label>
+    <input type="file" name="file">
+
+    <label>OR Enter URL:</label>
+    <input type="text" name="url">
+
+    <button type="submit">Convert</button>
+</form>
+</body>
+</html>

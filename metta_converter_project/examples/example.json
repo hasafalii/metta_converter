@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user1",
+    "details": {
+      "city": "New York"
+    }
+  },
+  {
+    "name": "Charlie",
+    "age": 40
+  }
+]
