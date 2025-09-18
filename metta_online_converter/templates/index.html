@@ -1,33 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MeTTa Online Converter</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 40px; }
-        form { display: flex; flex-direction: column; max-width: 400px; }
-        label { margin-top: 10px; }
-        button { margin-top: 20px; padding: 10px; }
-    </style>
+    <meta charset="UTF-8">
+    <title>MeTTa Converter</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-<h1>MeTTa Online Converter</h1>
-<form action="/convert" method="post" enctype="multipart/form-data">
-    <label>Source Type:</label>
-    <select name="source_type">
-        <option value="csv">CSV</option>
-        <option value="json">JSON</option>
-        <option value="txt">TXT</option>
-        <option value="web">Website</option>
-        <option value="api">API</option>
-    </select>
+    <div class="center-container">
+        <h1>MeTTa Online Converter</h1>
+        <p class="subtitle">Convert CSV, JSON, TXT, APIs, or Websites into MeTTa symbolic expressions (.metta files)</p>
 
-    <label>Upload File:</label>
-    <input type="file" name="file">
+        <form action="/convert" method="post" enctype="multipart/form-data">
+            <select name="source_type" required>
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+                <option value="txt">TXT</option>
+                <option value="web">Website</option>
+                <option value="api">API</option>
+            </select>
 
-    <label>OR Enter URL:</label>
-    <input type="text" name="url">
+            <input type="file" name="file">
+            <input type="text" name="url" placeholder="https://example.com/data">
 
-    <button type="submit">Convert</button>
-</form>
+            <button type="submit">Convert</button>
+        </form>
+
+        <div class="info-section">
+            <h2>About MeTTa</h2>
+            <p>MeTTa is a symbolic knowledge representation language used for AI reasoning.</p>
+
+            <h2>Legal Disclaimer</h2>
+            <ul>
+                <li>Only process <strong>publicly available data</strong> or files you own.</li>
+                <li>Do <strong>not upload stolen, copyrighted, or confidential files</strong>.</li>
+                <li>Web scraping must comply with target website's terms of service.</li>
+                <li>We are not responsible for misuse. Ensure GDPR and privacy compliance.</li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
