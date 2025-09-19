@@ -1,32 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MeTTa Converter</title>
-    <link rel="stylesheet" href="static/styles.css">
-</head>
-<body>
-    <div class="main-container">
-        <h1>MeTTa Converter</h1>
-        <p>Convert your CSV, JSON, or TXT files into MeTTa format easily.</p>
+from fastapi.responses import FileResponse
 
-        <form action="/convert" method="post" enctype="multipart/form-data" class="search-bar">
-            <select name="source_type">
-                <option value="csv">CSV</option>
-                <option value="json">JSON</option>
-                <option value="txt">TXT</option>
-            </select>
-            <input type="file" name="file" required>
-            <button type="submit">Convert</button>
-        </form>
+@app.post("/convert")
+async def convert(
+    request: Request,
+    source_type: str = Form(...),
+    file: UploadFile = File(None),
+):
+    parser_fn = PARSERS.get(source_type)
+    if not parser_fn:
+        raise HTTPException(status_code=400, detail="Invalid source type")
 
-        <div class="footer-links">
-            <p>Try sample datasets: 
-                <a href="https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv" target="_blank">Sample CSV</a>, 
-                <a href="https://jsonplaceholder.typicode.com/posts" target="_blank">Sample JSON</a>
-            </p>
-        </div>
-    </div>
-</body>
-</html>
+    if not file or not file.filename:
+        raise HTTPException(status_code=400, detail="No file provided")
+
+    # Save the uploaded file temporarily
+    temp_file_path = f"temp_{file.filename}"
+    with open(temp_file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    # Parse the file
+    metta_lines = parser_fn(temp_file_path)
+
+    # Clean up the temporary file
+    os.remove(temp_file_path)
+
+    # Save the converted MeTTa file
+    metta_file_path = os.path.join(METTA_FILES_DIR, f"{file.filename}.metta")
+    save_metta_file(file.filename, metta_lines)
+
+    # Return it as a download
+    return FileResponse(
+        path=metta_file_path,
+        media_type='application/octet-stream',
+        filename=f"{file.filename}.metta"
+    )
