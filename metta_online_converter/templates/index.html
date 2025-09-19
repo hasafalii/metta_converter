@@ -6,24 +6,41 @@
     <title>MeTTa Converter - Convert CSV, JSON, TXT to MeTTa</title>
     <meta name="description" content="MeTTa Converter: Quickly convert CSV, JSON, TXT files into MeTTa format for AI and knowledge processing.">
     <meta name="keywords" content="MeTTa Converter, CSV to MeTTa, JSON to MeTTa, TXT to MeTTa, AI, Knowledge Base, File Converter">
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <header>
-        <h1>MeTTa Converter</h1>
-        <p>Convert your CSV, JSON, or TXT files into MeTTa format easily.</p>
-    </header>
+    <div class="main-container">
 
-    <main class="main-content">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="/static/logo.png" alt="MeTTa Converter">
+        </div>
+
+        <!-- Converter Form -->
+        <form action="/convert" method="post" enctype="multipart/form-data" class="search-bar">
+            <input type="file" name="file" required>
+            <select name="source_type">
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+                <option value="txt">TXT</option>
+            </select>
+        </form>
+
+        <div class="buttons">
+            <button type="submit" form="form">Convert</button>
+        </div>
+
+        <!-- How It Works -->
         <section>
             <h2>How It Works</h2>
             <ol>
                 <li>Prepare your CSV, JSON, or TXT file.</li>
-                <li>Upload it to MeTTa Converter (private interface).</li>
+                <li>Upload it to MeTTa Converter.</li>
                 <li>Download the converted MeTTa file and use it in your AI projects.</li>
             </ol>
         </section>
 
+        <!-- Why Use MeTTa Converter -->
         <section>
             <h2>Why Use MeTTa Converter?</h2>
             <ul>
@@ -34,19 +51,18 @@
             </ul>
         </section>
 
-        <section>
-            <h2>Get Started</h2>
-            <p>Access the converter securely here: <a href="/converter">Go to MeTTa Converter</a></p>
+        <!-- Resources -->
+        <section class="footer-links">
+            <p>Try sample datasets to convert: 
+                <a href="https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv" target="_blank">Sample CSV</a>, 
+                <a href="https://jsonplaceholder.typicode.com/posts" target="_blank">Sample JSON</a>
+            </p>
         </section>
 
-        <section>
-            <h2>Resources</h2>
-            <p>Try sample datasets to convert: <a href="https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv" target="_blank">Sample CSV</a>, <a href="https://jsonplaceholder.typicode.com/posts" target="_blank">Sample JSON</a></p>
-        </section>
-    </main>
+        <footer>
+            <p>&copy; 2025 MeTTa Converter. All rights reserved.</p>
+        </footer>
 
-    <footer>
-        <p>&copy; 2025 MeTTa Converter. All rights reserved.</p>
-    </footer>
+    </div>
 </body>
 </html>

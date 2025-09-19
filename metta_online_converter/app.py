@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Request, Form, HTTPException, File, UploadFile
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import FastAPI, Request, Form, File, UploadFile, HTTPException
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import os
@@ -10,14 +10,13 @@ from parsers.txt_parser import parse_txt
 
 app = FastAPI()
 
-# --- Constants ---
+# --- Directories ---
 STATIC_DIR = "static"
 TEMPLATES_DIR = "templates"
 METTA_FILES_DIR = "metta_files"
-LOGIN_PASSWORD = "letmein123"
-
-# --- Setup ---
 os.makedirs(METTA_FILES_DIR, exist_ok=True)
+
+# --- Setup Static & Templates ---
 app.mount(f"/{STATIC_DIR}", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
@@ -28,73 +27,48 @@ PARSERS = {
     "txt": parse_txt,
 }
 
-# --- Helper Functions ---
+# --- Helper Function ---
 def save_metta_file(filename: str, content: list[str]):
-    """Saves the converted MeTTa content to a file."""
     file_path = os.path.join(METTA_FILES_DIR, f"{filename}.metta")
     with open(file_path, "w", encoding="utf-8") as f:
         for line in content:
             f.write(line.rstrip() + "\n")
 
-# --- Login Routes ---
+# --- Home / Converter Page ---
 @app.get("/", response_class=HTMLResponse)
-async def login_page(request: Request):
-    """Renders the login page."""
-    return templates.TemplateResponse("login.html", {"request": request})
-
-@app.post("/login")
-async def login(request: Request, password: str = Form(...)):
-    """Handles the login form submission."""
-    if password == LOGIN_PASSWORD:
-        response = RedirectResponse(url="/converter", status_code=302)
-        response.set_cookie(key="access_granted", value="true")
-        return response
-    return templates.TemplateResponse(
-        "login.html", {"request": request, "error": "Invalid password"}
-    )
-
-# --- Converter Route ---
-@app.get("/converter", response_class=HTMLResponse)
 async def converter_page(request: Request):
-    """Renders the main converter page."""
-    if request.cookies.get("access_granted") != "true":
-        return RedirectResponse(url="/")
+    """Renders the main converter page directly (no login)."""
     return templates.TemplateResponse("index.html", {"request": request})
 
-# --- Conversion Route ---
+# --- Conversion Endpoint ---
 @app.post("/convert")
 async def convert(
     request: Request,
     source_type: str = Form(...),
     file: UploadFile = File(None),
 ):
-    """Handles the file conversion."""
-    if request.cookies.get("access_granted") != "true":
-        return RedirectResponse(url="/")
-
     parser_fn = PARSERS.get(source_type)
     if not parser_fn:
         raise HTTPException(status_code=400, detail="Invalid source type")
 
+    if not file or not file.filename:
+        raise HTTPException(status_code=400, detail="No file provided")
+
     try:
-        if file and file.filename:
-            # Save the uploaded file temporarily
-            temp_file_path = f"temp_{file.filename}"
-            with open(temp_file_path, "wb") as buffer:
-                shutil.copyfileobj(file.file, buffer)
-            
-            # Parse the file
-            metta_lines = parser_fn(temp_file_path)
-            
-            # Clean up the temporary file
-            os.remove(temp_file_path)
-            
-            # Save the converted MeTTa file
-            save_metta_file(file.filename, metta_lines)
-            
-            content = "\n".join(metta_lines)
-        else:
-            raise HTTPException(status_code=400, detail="No file provided")
+        temp_file_path = f"temp_{file.filename}"
+        with open(temp_file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        # Parse the file
+        metta_lines = parser_fn(temp_file_path)
+        
+        # Clean up temporary file
+        os.remove(temp_file_path)
+        
+        # Save converted file
+        save_metta_file(file.filename, metta_lines)
+
+        content = "\n".join(metta_lines)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during conversion: {e}")
