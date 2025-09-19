@@ -6,10 +6,7 @@ import os
 import shutil
 from parsers.csv_parser import parse_csv
 from parsers.json_parser import parse_json
-from parsers.api_parser import parse_api
-from parsers.xml_parser import parse_xml
 from parsers.txt_parser import parse_txt
-from parsers.web_parser import parse_website
 
 app = FastAPI()
 
@@ -28,10 +25,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 PARSERS = {
     "csv": parse_csv,
     "json": parse_json,
-    "xml": parse_xml,
     "txt": parse_txt,
-    "web": parse_website,
-    "api": parse_api,
 }
 
 # --- Helper Functions ---
@@ -72,7 +66,6 @@ async def converter_page(request: Request):
 async def convert(
     request: Request,
     source_type: str = Form(...),
-    url: str = Form(None),
     file: UploadFile = File(None),
 ):
     """Handles the file conversion."""
@@ -100,12 +93,8 @@ async def convert(
             save_metta_file(file.filename, metta_lines)
             
             content = "\n".join(metta_lines)
-        elif url:
-            metta_lines = parser_fn(url)
-            save_metta_file(url.replace("/", "_").replace(":", ""), metta_lines)
-            content = "\n".join(metta_lines)
         else:
-            raise HTTPException(status_code=400, detail="No file or URL provided")
+            raise HTTPException(status_code=400, detail="No file provided")
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during conversion: {e}")
