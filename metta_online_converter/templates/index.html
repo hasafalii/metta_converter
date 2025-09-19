@@ -3,66 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MeTTa Converter - Convert CSV, JSON, TXT to MeTTa</title>
-    <meta name="description" content="MeTTa Converter: Quickly convert CSV, JSON, TXT files into MeTTa format for AI and knowledge processing.">
-    <meta name="keywords" content="MeTTa Converter, CSV to MeTTa, JSON to MeTTa, TXT to MeTTa, AI, Knowledge Base, File Converter">
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>MeTTa Converter</title>
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div class="main-container">
+        <h1>MeTTa Converter</h1>
+        <p>Convert your CSV, JSON, or TXT files into MeTTa format easily.</p>
 
-        <!-- Logo -->
-        <div class="logo">
-            <img src="/static/logo.png" alt="MeTTa Converter">
-        </div>
-
-        <!-- Converter Form -->
         <form action="/convert" method="post" enctype="multipart/form-data" class="search-bar">
-            <input type="file" name="file" required>
             <select name="source_type">
                 <option value="csv">CSV</option>
                 <option value="json">JSON</option>
                 <option value="txt">TXT</option>
             </select>
+            <input type="file" name="file" required>
+            <button type="submit">Convert</button>
         </form>
 
-        <div class="buttons">
-            <button type="submit" form="form">Convert</button>
-        </div>
-
-        <!-- How It Works -->
-        <section>
-            <h2>How It Works</h2>
-            <ol>
-                <li>Prepare your CSV, JSON, or TXT file.</li>
-                <li>Upload it to MeTTa Converter.</li>
-                <li>Download the converted MeTTa file and use it in your AI projects.</li>
-            </ol>
-        </section>
-
-        <!-- Why Use MeTTa Converter -->
-        <section>
-            <h2>Why Use MeTTa Converter?</h2>
-            <ul>
-                <li>Fast and easy conversion.</li>
-                <li>Supports large files safely.</li>
-                <li>Perfect for AI knowledge base preparation.</li>
-                <li>Secure: Your files are processed locally and temporarily.</li>
-            </ul>
-        </section>
-
-        <!-- Resources -->
-        <section class="footer-links">
-            <p>Try sample datasets to convert: 
+        <div class="footer-links">
+            <p>Try sample datasets: 
                 <a href="https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv" target="_blank">Sample CSV</a>, 
                 <a href="https://jsonplaceholder.typicode.com/posts" target="_blank">Sample JSON</a>
             </p>
-        </section>
-
-        <footer>
-            <p>&copy; 2025 MeTTa Converter. All rights reserved.</p>
-        </footer>
-
+        </div>
     </div>
 </body>
 </html>
