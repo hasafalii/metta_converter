@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /converter/
+Allow: /
+
+Sitemap: https://umetta.com/sitemap.xml

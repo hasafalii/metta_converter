@@ -1,80 +1,56 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.logo {
-    font-size: 60px;
-    margin-bottom: 20px;
-}
-
-.logo .metta-M { color: #4285F4; }
-.logo .metta-e { color: #DB4437; }
-.logo .metta-t { color: #F4B400; }
-.logo .metta-T { color: #4285F4; }
-.logo .metta-a { color: #0F9D58; }
-
-
-.search-bar {
-    margin-bottom: 20px;
-}
-
-.search-bar input {
-    width: 500px;
-    padding: 10px 20px;
-    border: 1px solid #dfe1e5;
-    border-radius: 24px;
-    font-size: 16px;
-    outline: none;
-}
-
-.search-bar input:hover, .search-bar input:focus {
-    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-    border-color: rgba(223,225,229,0);
-}
-
-.buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.buttons button, .custom-file-upload {
-    background-color: #f8f9fa;
-    border: 1px solid #f8f9fa;
-    border-radius: 4px;
-    color: #3c4043;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    margin: 11px 4px;
-    padding: 0 16px;
-    line-height: 27px;
-    height: 36px;
-    min-width: 54px;
+header {
+    background-color: #4285F4;
+    color: white;
+    padding: 40px 20px;
     text-align: center;
-    cursor: pointer;
-    user-select: none;
 }
 
-.buttons button:hover, .custom-file-upload:hover {
-    border-color: #dadce0;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+header h1 {
+    margin: 0;
+    font-size: 48px;
 }
 
-input[type="file"] {
-    display: none;
+header p {
+    font-size: 18px;
 }
 
-.source-type {
-    margin-top: 20px;
+.main-content {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.main-content h2 {
+    color: #4285F4;
+    margin-bottom: 10px;
+}
+
+.main-content ol,
+.main-content ul {
+    margin-left: 20px;
+}
+
+.main-content a {
+    color: #DB4437;
+    text-decoration: none;
+}
+
+.main-content a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    color: #555;
 }
