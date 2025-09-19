@@ -2,41 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MeTTa Converter</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
 </head>
 <body>
-    <div class="center-container">
-        <h1>MeTTa Online Converter</h1>
-        <p class="subtitle">Convert CSV, JSON, TXT, APIs, or Websites into MeTTa symbolic expressions (.metta files)</p>
-
-        <form action="/convert" method="post" enctype="multipart/form-data">
-            <select name="source_type" required>
-                <option value="csv">CSV</option>
-                <option value="json">JSON</option>
-                <option value="txt">TXT</option>
-                <option value="web">Website</option>
-                <option value="api">API</option>
-            </select>
-
-            <input type="file" name="file">
-            <input type="text" name="url" placeholder="https://example.com/data">
-
-            <button type="submit">Convert</button>
-        </form>
-
-        <div class="info-section">
-            <h2>About MeTTa</h2>
-            <p>MeTTa is a symbolic knowledge representation language used for AI reasoning.</p>
-
-            <h2>Legal Disclaimer</h2>
-            <ul>
-                <li>Only process <strong>publicly available data</strong> or files you own.</li>
-                <li>Do <strong>not upload stolen, copyrighted, or confidential files</strong>.</li>
-                <li>Web scraping must comply with target website's terms of service.</li>
-                <li>We are not responsible for misuse. Ensure GDPR and privacy compliance.</li>
-            </ul>
+    <div class="container">
+        <div class="logo">
+            <span class="metta-M">M</span><span class="metta-e">e</span><span class="metta-t">T</span><span class="metta-T">T</span><span class="metta-a">a</span>
         </div>
+        <form action="/convert" method="post" enctype="multipart/form-data">
+            <div class="search-bar">
+                <input type="text" name="url" placeholder="Enter a URL to convert">
+            </div>
+            <div class="buttons">
+                <button type="submit">Convert URL</button>
+                <label for="file-upload" class="custom-file-upload">
+                    Upload File
+                </label>
+                <input id="file-upload" type="file" name="file"/>
+            </div>
+            <div class="source-type">
+                <label for="source_type">Source Type:</label>
+                <select name="source_type">
+                    <option value="csv">CSV</option>
+                    <option value="json">JSON</option>
+                    <option value="xml">XML</option>
+                    <option value="txt">TXT</option>
+                    <option value="web">Web</option>
+                    <option value="api">API</option>
+                </select>
+            </div>
+        </form>
     </div>
 </body>
 </html>
